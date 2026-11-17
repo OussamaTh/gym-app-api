@@ -6,6 +6,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from './auth/auth.module.js';
 import { JwtAuthGuard } from './common/jwt-auth-guard.js';
 import { UsersModule } from './users/users.module.js';
+import { PlanModule } from './plan/plan.module.js';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { UsersModule } from './users/users.module.js';
     ThrottlerModule.forRoot([{ ttl: 60_000, limit: 60 }]), // 60 requests per minute per IP
     UsersModule,
     AuthModule,
+    PlanModule
   ],
   providers: [
     { provide: APP_GUARD, useClass: ThrottlerGuard },

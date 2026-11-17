@@ -34,7 +34,15 @@ export class PlanService {
 
     /** All items of this user, grouped by weekday: { "1": [...], "3": [...] } */
     async getPlans(userId: string) {
+        console.log('DB', this.model.db.name, '| COLLECTION', this.model.collection.name);
+        console.log('SCHEMA userId type:', this.model.schema.path('userId').instance);
+        const raw = await this.model.collection.find({}).toArray();
+        console.log('RAW', raw.map((d: any) => ({ name: d.name, userIdType: d.userId?.constructor?.name, userId: String(d.userId) })));
+        console.log('LOOKING FOR', userId, typeof userId);
+
         const items = await this.model.find({ userId }).sort({ weekday: 1, position: 1 });
+        console.log('GET PLANS', { userId, mine: items.length, total: await this.model.countDocuments() }); // temporary
+
         const byDay: Record<number, PlanItemView[]> = {};
         for (const item of items) (byDay[item.weekday] ??= []).push(toView(item));
         return byDay;
