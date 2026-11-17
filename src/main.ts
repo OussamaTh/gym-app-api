@@ -10,6 +10,7 @@ async function bootstrap() {
   // At runtime it is either the function itself or its .default, so this handles both.
   const helmetFn = (helmet as any).default ?? helmet;
   app.use(helmetFn());
+  app.enableCors();
 
   app.setGlobalPrefix('api');
   // whitelist strips any field that is not declared in a DTO
