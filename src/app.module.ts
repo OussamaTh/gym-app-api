@@ -7,6 +7,8 @@ import { AuthModule } from './auth/auth.module.js';
 import { JwtAuthGuard } from './common/jwt-auth-guard.js';
 import { UsersModule } from './users/users.module.js';
 import { PlanModule } from './plan/plan.module.js';
+import { LogsModule } from './logs/logs.module.js';
+import { BodyWeightModule } from './body-weight/body-weight.module.js';
 
 @Module({
   imports: [
@@ -18,7 +20,9 @@ import { PlanModule } from './plan/plan.module.js';
     ThrottlerModule.forRoot([{ ttl: 60_000, limit: 60 }]), // 60 requests per minute per IP
     UsersModule,
     AuthModule,
-    PlanModule
+    PlanModule,
+    LogsModule,
+    BodyWeightModule
   ],
   providers: [
     { provide: APP_GUARD, useClass: ThrottlerGuard },

@@ -37,9 +37,7 @@ export class AuthService {
   }
 
   async login(dto: LoginDto) {
-    console.log("user is about to register in the gym app");
     const user = await this.users.findByEmail(dto.email);
-    // One message for both cases, so nobody can tell which emails exist
     if (!user || !(await argon2.verify(user.passwordHash, dto.password))) {
       throw new UnauthorizedException('Wrong email or password');
     }
